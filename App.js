@@ -1,48 +1,53 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import React, { Component } from "react"
+import { View } from "react-native"
+import Field from "./components/field"
 
 export default class App extends Component {
-  render () {
+  state = {
+    moles: [
+      { id: 1, active: true },
+      { id: 2, active: false },
+      { id: 3, active: true },
+      { id: 4, active: true },
+      { id: 5, active: false },
+      { id: 6, active: true },
+      { id: 7, active: true },
+      { id: 8, active: false },
+      { id: 9, active: true },
+    ],
+  }
+
+  componentDidMount() {
+    this.interval && this.interval.clear()
+    // this.cycleMoles()
+  }
+
+  cycleMoles() {
+    return (this.interval = setInterval(() => {
+      const rando = Math.floor(Math.random() * 9)
+      const cycle = [rando, rando, rando]
+      const { moles } = this.state
+      if (cycle.length > 0) {
+        const newMoles = moles.map((m, i) => {
+          if (i === cycle[0]) {
+            cycle.pop()
+            return { id: m.id, active: !m.active }
+          } else {
+            cycle.pop()
+            return m
+          }
+        })
+        console.log("NEW MOLES", newMoles)
+        this.setState({ moles: newMoles })
+      }
+    }, 1000))
+  }
+
+  render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      <View style={{ flex: 1 }}>
+        <Field moles={this.state.moles} />
       </View>
-    );
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
