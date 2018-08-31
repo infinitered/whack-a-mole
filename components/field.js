@@ -9,7 +9,6 @@ const renderHole = ({ item }) => {
 }
 
 export default props => {
-  console.log("MOLES", props.moles)
   return (
     <View style={styles.container}>
       <FlatList

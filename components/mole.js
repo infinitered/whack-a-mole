@@ -15,12 +15,18 @@ export default class Mole extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.active !== prevProps.active) {
+      this.setState({ currentImage: this.props.active ? mole : hole })
+    }
+  }
+
   handlePressIn = () => {
-    if (this.props.active) this.setState({ currentImage: hit })
+    this.setState({ currentImage: hit })
   }
 
   handlePressOut = () => {
-    if (this.props.active) this.setState({ currentImage: struck })
+    this.setState({ currentImage: struck })
   }
 
   render() {

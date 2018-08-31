@@ -5,27 +5,27 @@ import Field from "./components/field"
 export default class App extends Component {
   state = {
     moles: [
-      { id: 1, active: true },
+      { id: 1, active: false },
       { id: 2, active: false },
-      { id: 3, active: true },
-      { id: 4, active: true },
+      { id: 3, active: false },
+      { id: 4, active: false },
       { id: 5, active: false },
-      { id: 6, active: true },
-      { id: 7, active: true },
+      { id: 6, active: false },
+      { id: 7, active: false },
       { id: 8, active: false },
-      { id: 9, active: true },
+      { id: 9, active: false },
     ],
   }
 
   componentDidMount() {
     this.interval && this.interval.clear()
-    // this.cycleMoles()
+    this.cycleMoles()
   }
 
   cycleMoles() {
     return (this.interval = setInterval(() => {
       const rando = Math.floor(Math.random() * 9)
-      const cycle = [rando, rando, rando]
+      const cycle = [rando, rando, rando, rando, rando, rando, rando, rando, rando]
       const { moles } = this.state
       if (cycle.length > 0) {
         const newMoles = moles.map((m, i) => {
@@ -37,10 +37,9 @@ export default class App extends Component {
             return m
           }
         })
-        console.log("NEW MOLES", newMoles)
         this.setState({ moles: newMoles })
       }
-    }, 1000))
+    }, 500))
   }
 
   render() {
